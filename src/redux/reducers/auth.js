@@ -1,14 +1,14 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { TRACK_LOAN_APPLICATION, FIND_ALL_REQUESTS } from "../actionTypes";
+import { LOGIN, FIND_ALL_USERS } from "../actionTypes";
 
 export const initialState = {};
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case TRACK_LOAN_APPLICATION:
+    case LOGIN:
       return { ...state, ...payload };
-    case FIND_ALL_REQUESTS:
-      return { ...state, allRequests: payload };
+    case FIND_ALL_USERS:
+      return { ...state, allUsers: payload };
     default:
       return state;
   }

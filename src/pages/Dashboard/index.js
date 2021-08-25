@@ -1,16 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Progress, Button as Btn } from "antd";
 import {
   MoneyCollectFilled,
   VerifiedOutlined,
   UsergroupAddOutlined,
-  PlusCircleOutlined
+  PlusCircleOutlined,
 } from "@ant-design/icons";
 import DashboardLayout from "layouts/DashboardLayout";
 import { Bar } from "react-chartjs-2";
 import "./style.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { findWalletData, findTotalWallet } from "redux/action/walletAction";
+import { findAllUsersAction } from "redux/action/authAction";
+import { findAllRequests } from "redux/action/loanAction";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+
+  const {
+    core: { loading },
+    wallet,
+    auth: { allUsers },
+    loan: { allRequests },
+  } = useSelector(
+    ({
+      core: { loading },
+      wallet,
+      auth: { allUsers },
+      loan: { allRequests },
+    }) => ({
+      core: { loading },
+      wallet,
+      auth: { allUsers },
+      loan: { allRequests },
+    })
+  );
+
+  useEffect(() => {
+    findWalletData()(dispatch);
+    findTotalWallet()(dispatch);
+    findAllUsersAction()(dispatch);
+    findAllRequests()(dispatch);
+  }, []);
+
   const analyticData = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
@@ -67,7 +99,12 @@ const Dashboard = () => {
                     </div>
 
                     <label htmlFor="">
-                      <strong>RWF12,3000</strong>
+                      <strong>
+                        RWF{" "}
+                        {wallet?.revenue?.data?.totalRevenue
+                          ? wallet?.revenue?.data?.totalRevenue
+                          : 0}
+                      </strong>
                     </label>
                   </span>
                 </div>
@@ -85,7 +122,7 @@ const Dashboard = () => {
                     </div>
 
                     <label htmlFor="">
-                      <strong>9821</strong>
+                      <strong>{allUsers ? allUsers.data.length : 0}</strong>
                     </label>
                   </span>
                 </div>
@@ -103,7 +140,9 @@ const Dashboard = () => {
                     </div>
 
                     <label htmlFor="">
-                      <strong>192</strong>
+                      <strong>
+                        {allRequests ? allRequests.data.length : 0}
+                      </strong>
                     </label>
                   </span>
                 </div>
@@ -118,13 +157,16 @@ const Dashboard = () => {
               </span>
               <div className="bal-card">
                 <h3 className="section-title text-center pt-4 text-light">
-                  RWF 98,200.00
+                  RWF{" "}
+                  {wallet?.myWallet?.data?.balance
+                    ? wallet?.myWallet?.data?.balance
+                    : 0}
                 </h3>
                 <p className="text-center text-semi-light px-2">
                   Your active balance
                 </p>
                 <p className="text-center">
-                  <PlusCircleOutlined style={{fontSize: "19px"}}/>
+                  <PlusCircleOutlined style={{ fontSize: "19px" }} />
                 </p>
               </div>
             </div>
@@ -143,7 +185,7 @@ const Dashboard = () => {
             {/* allocations */}
             <div className="allocation-container">
               <span>
-                <h5 className="p-2 section-title">Total Balance</h5>{" "}
+                <h5 className="p-2 section-title">Loan Allocation</h5>{" "}
               </span>
               <div className="d-flex justify-content-between w-100">
                 <span className="text-gray px-2">Allocation name</span>
@@ -151,16 +193,24 @@ const Dashboard = () => {
               </div>
               <hr />
 
-              <div className="d-flex flex-row justify-content-between mx-3">
-                <div className="w-100">
-                  <strong>John Doe</strong>
-                  <Progress percent={30} />
+              {allRequests?.data?.map((request, index) => (
+                <div
+                  key={index}
+                  className="d-flex flex-row justify-content-between mx-3 mt-3"
+                >
+                  <div className="w-100">
+                    <strong>
+                      {request.first_name} {request.last_name}
+                    </strong>
+                    <Progress
+                      percent={
+                        ((request.amount_paid / request.total_amount_to_pay) *
+                        100).toFixed(1)
+                      }
+                    />
+                  </div>
                 </div>
-
-                {/* <span>
-                  <strong>80.82%</strong>
-                </span> */}
-              </div>
+              ))}
             </div>
           </div>
         </div>

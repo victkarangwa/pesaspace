@@ -9,6 +9,7 @@ import { set } from "store/dist/store.modern.min";
 import { useDispatch, useSelector } from "react-redux";
 import PublicHeader from "components/PublicHeader";
 import { trackLoanApplication } from "redux/action/loanAction";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
@@ -85,7 +86,9 @@ const LandingPage = () => {
           />
         </div>
 
-        <div></div>
+        <div className="text-center pt-5">
+          <Link to="/login">User Portal</Link>
+        </div>
       </div>
     </div>
   );

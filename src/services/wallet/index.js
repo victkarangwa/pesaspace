@@ -1,23 +1,23 @@
 /* eslint-disable no-unused-vars */
 import http from "../http";
 
-const trackApplication = async (    loan_id) => {
+const myWallet = async (payload) => {
   try {
-    return await http.get(`/loan/find/${loan_id}`);
+    return await http.get("/wallet/my");
   } catch (error) {
     console.log("API ERROR: ", error);
   }
 };
 
-const findAllRequests = async (    loan_id) => {
+const totalRevenue = async (payload) => {
   try {
-    return await http.get(`/loan/all`);
+    return await http.get("/wallet/revenue");
   } catch (error) {
     console.log("API ERROR: ", error);
   }
 };
 
 export default {
-  trackApplication,
-  findAllRequests,
+  myWallet,
+  totalRevenue,
 };

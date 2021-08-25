@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import logo_dark from "assets/images/logo_dark.png";
 import Button from "components/Button";
-// import {loginAction} from "../../redux/actions/auth";
+import {loginAction} from "redux/action/authAction";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const Login = () => {
   } = useSelector(({ core }) => ({ core }));
 
   const handleLogin = (loginFields) => {
-    // loginAction(loginFields)(dispatch);
+    loginAction(loginFields)(dispatch);
   };
   return (
     <div className="  d-flex flex-row justify-content-center container">

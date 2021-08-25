@@ -11,6 +11,8 @@ import store from "store";
 import Logo from "assets/images/logo.png";
 import "./style.scss";
 
+
+
 const AppHeader = ({
   setOpenMenu,
   cartItems,

@@ -33,7 +33,7 @@ const instance = axios.create({
       : process.env.REACT_APP_DEV_URL,
   headers: {
     "Content-Type": "application/json",
-    authorization: "",
+    Authorization: store.get("pp-token"),
   },
   timeout: 20000,
   responseType: "json",

@@ -1,44 +1,22 @@
 import store from "store";
-import { TRACK_LOAN_APPLICATION, FIND_ALL_REQUESTS, LOADING_USER } from "redux/actionTypes";
-import loanService from "services/loan";
+import { GET_USER_WALLET, GET_TOTAL_WALLET, LOADING_USER } from "redux/actionTypes";
+import { notification } from "antd";
+import walletService from "services/wallet";
 
-export const trackLoanApplication = (loan_id) => async (dispatch) => {
+export const findWalletData = (payload) => async (dispatch) => {
   dispatch({ type: LOADING_USER, payload: { loading: true } });
   try {
-    const { status, body } = await loanService.trackApplication(loan_id);
+    const { status, body } = await walletService.myWallet(payload);
     if (status === 200) {
       dispatch({
-        type: TRACK_LOAN_APPLICATION,
+        type: GET_USER_WALLET,
         payload: { data: body.data, status: "success" },
       });
     }
     dispatch({ type: LOADING_USER, payload: { loading: false } });
   } catch (error) {
     dispatch({
-      type: TRACK_LOAN_APPLICATION,
-      payload: {
-        data: "ID not found",
-        status: "fail",
-      },
-    });
-    dispatch({ type: LOADING_USER, payload: { loading: false } });
-  }
-};
-
-export const findAllRequests = (loan_id) => async (dispatch) => {
-  dispatch({ type: LOADING_USER, payload: { loading: true } });
-  try {
-    const { status, body } = await loanService.findAllRequests(loan_id);
-    if (status === 200) {
-      dispatch({
-        type: FIND_ALL_REQUESTS,
-        payload: { data: body.data, status: "success" },
-      });
-    }
-    dispatch({ type: LOADING_USER, payload: { loading: false } });
-  } catch (error) {
-    dispatch({
-      type: FIND_ALL_REQUESTS,
+      type: GET_USER_WALLET,
       payload: {
         data: "Request failed",
         status: "fail",
@@ -48,3 +26,25 @@ export const findAllRequests = (loan_id) => async (dispatch) => {
   }
 };
 
+export const findTotalWallet = (payload) => async (dispatch) => {
+  dispatch({ type: LOADING_USER, payload: { loading: true } });
+  try {
+    const { status, body } = await walletService.totalRevenue(payload);
+    if (status === 200) {
+      dispatch({
+        type: GET_TOTAL_WALLET,
+        payload: { data: body.data, status: "success" },
+      });
+    }
+    dispatch({ type: LOADING_USER, payload: { loading: false } });
+  } catch (error) {
+    dispatch({
+      type: GET_TOTAL_WALLET,
+      payload: {
+        data: "Request failed",
+        status: "fail",
+      },
+    });
+    dispatch({ type: LOADING_USER, payload: { loading: false } });
+  }
+};

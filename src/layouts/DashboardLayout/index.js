@@ -11,6 +11,7 @@ import MainHeader from "components/MainHeader";
 import Logo from "assets/images/logo.png";
 import Me from "assets/images/avatar.png";
 import store from "store";
+import { decoder as tokenDecoder } from "utils/tokenDecoder";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -68,7 +69,7 @@ const DashboardLayout = ({ children }) => {
                 src={Me}
               />
               <span className="mx-2 text-capitalize">
-                <strong>John Doe</strong>
+                <strong>{tokenDecoder().first_name} {tokenDecoder().last_name}</strong>
               </span>
             </div>
           </div>
