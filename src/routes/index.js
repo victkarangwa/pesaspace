@@ -20,11 +20,11 @@ export default class index extends Component {
           component={lazy(() => import("pages/Dashboard"))}
         />
 
-        {/* <PublicRoute
+        <PublicRoute
           path={"/login"}
           exact
           component={lazy(() => import("pages/Login"))}
-        /> */}
+        />
 
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />

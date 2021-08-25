@@ -131,8 +131,8 @@ const Dashboard = () => {
             {/* analytics */}
             <div className="analytics-container">
               <span>
-                <h5 className="p-2 section-title">payment analytics</h5>{" "}
-                <label className="text-gray px-2">Total payment</label>
+                <h5 className="p-2 section-title">Request analytics</h5>{" "}
+                <label className="text-gray px-2">Total requests</label>
               </span>
               <Bar data={analyticData} className="" />
             </div>

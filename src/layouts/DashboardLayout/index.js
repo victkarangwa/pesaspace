@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Layout, Menu, Input } from "antd";
 import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
+  PoweroffOutlined,
   DashboardFilled,
   SearchOutlined,
 } from "@ant-design/icons";
@@ -11,14 +10,16 @@ import { Link } from "react-router-dom";
 import MainHeader from "components/MainHeader";
 import Logo from "assets/images/logo.png";
 import Me from "assets/images/avatar.png";
+import store from "store";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const DashboardLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const toggle = () => {
-    setCollapsed(!collapsed);
+  const handleLogout = () => {
+    store.remove("pp-token");
+    window.location.replace("/login");
   };
 
   return (
@@ -39,8 +40,11 @@ const DashboardLayout = ({ children }) => {
           defaultSelectedKeys={["1"]}
           className="mt-5 site-layout-background"
         >
-          <Menu.Item key={"0"} className="nav-menu" icon={<DashboardFilled />}>
+          <Menu.Item key={"1"} className="nav-menu" icon={<DashboardFilled />}>
             <Link to={"/"}>Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key={"2"} className="nav-menu" icon={<PoweroffOutlined />}>
+            <Link onClick={handleLogout}>Logout</Link>
           </Menu.Item>
         </Menu>
       </Sider>
