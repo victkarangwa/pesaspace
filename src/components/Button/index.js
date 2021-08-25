@@ -21,6 +21,7 @@ const Btn = ({
       loading={loading}
       htmlType={htmlType}
       disabled={disabled}
+      type="primary"
     >
       {children}
     </Button>

@@ -21,6 +21,18 @@ export default class index extends Component {
         />
 
         <PublicRoute
+          path={"/admin/users"}
+          exact
+          component={lazy(() => import("pages/Admin"))}
+        />
+
+        <PublicRoute
+          path={"/admin/requests"}
+          exact
+          component={lazy(() => import("pages/Admin/Request"))}
+        />
+
+        <PublicRoute
           path={"/login"}
           exact
           component={lazy(() => import("pages/Login"))}
