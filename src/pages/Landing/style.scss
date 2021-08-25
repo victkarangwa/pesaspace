@@ -1,0 +1,60 @@
+@import "../../assets/styles/colors.scss";
+
+.m-body {
+  background-color: $light-color;
+  width: 95%;
+  margin: 0 auto;
+  border-radius: 10px;
+  @media screen and (max-width: 768px) {
+    height: 90vh;
+  }
+}
+
+.m-text {
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 5px;
+  padding: 30px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 30px;
+    padding: 10px;
+    letter-spacing: 3px;
+  }
+  
+}
+
+.services{
+  margin-top: 50px;
+  padding-left: 10px !important;
+  letter-spacing: normal !important;
+  font-weight: normal !important;
+
+  .service-item{
+    font-size: 20px !important;
+  }
+}
+
+.error-text{
+  font-size: 17px !important;
+  padding-left: 10px !important;
+  letter-spacing: normal !important;
+  color: red !important;
+}
+.illisImg{
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.highlight{
+  font-size: 70px;
+}
+
+.l-data{
+  font-size: 17px;
+  letter-spacing: normal !important;
+  font-weight: normal !important;
+  border: 1px solid black;
+  padding: 5px
+}

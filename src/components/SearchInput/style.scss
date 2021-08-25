@@ -1,0 +1,54 @@
+@import "../../assets/styles/colors.scss";
+
+.search-section {
+ display: flex;
+ flex-direction: column;
+  
+
+  button:not(.ant-modal-close) {
+
+    border-radius: 0px 10px 10px 0px !important;
+    height: 51px;
+    width: 200px;
+    @media screen and (max-width: 768px) {
+      width: 160px;
+    }
+  }
+  input {
+    border-radius: 10px 0px 0px 10px;
+    padding: 12px 20px;
+  }
+
+  
+  
+  .search-input{
+    z-index: 2;
+  }
+
+  .suggestion-box{
+    background-color: #fff;
+    font-size: 17px;
+    font-weight: 400;
+    position: relative;
+    margin-top: -20px;
+    z-index: 1;
+    padding-top: 30px;
+    color: rgb(158, 158, 158);
+    letter-spacing: normal;
+
+    ul{
+      list-style-type: none;
+      cursor: pointer;
+      li{
+        margin-top: 10px;
+        text-transform: capitalize;
+        padding: 10px 3px;
+      }
+
+      li:hover{
+        background-color: rgba(0, 0, 0, 0.041);
+      }
+    }
+  }
+
+}

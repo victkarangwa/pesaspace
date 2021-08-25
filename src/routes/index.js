@@ -8,11 +8,11 @@ export default class index extends Component {
   render() {
     return (
       <Switch>
-        {/* <PublicRoute
+        <PublicRoute
           path={["/", "/home"]}
           exact
           component={lazy(() => import("pages/Landing"))}
-        /> */}
+        />
 
         <PublicRoute
           path={"/dashboard"}
