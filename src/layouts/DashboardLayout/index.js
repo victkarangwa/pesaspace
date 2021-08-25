@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Input } from "antd";
 import {
-  AppstoreOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UserOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  DashboardFilled,
+  SearchOutlined,
 } from "@ant-design/icons";
+import "./style.scss";
+import { Link } from "react-router-dom";
+import MainHeader from "components/MainHeader";
+import Logo from "assets/images/logo.png";
+import Me from "assets/images/avatar.png";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -25,64 +24,61 @@ const DashboardLayout = ({ children }) => {
   return (
     <Layout>
       <Sider
-        style={{
-          overflow: "auto",
-          height: "100vh",
-          position: "fixed",
-          left: 0,
-        }}
+        trigger={null}
         collapsible
         collapsed={collapsed}
+        className="vh-100 sider"
       >
-        <div className="logo" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            nav 1
-          </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            nav 2
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
-            nav 3
-          </Menu.Item>
-          <Menu.Item key="4" icon={<BarChartOutlined />}>
-            nav 4
-          </Menu.Item>
-          <Menu.Item key="5" icon={<CloudOutlined />}>
-            nav 5
-          </Menu.Item>
-          <Menu.Item key="6" icon={<AppstoreOutlined />}>
-            nav 6
-          </Menu.Item>
-          <Menu.Item key="7" icon={<TeamOutlined />}>
-            nav 7
-          </Menu.Item>
-          <Menu.Item key="8" icon={<ShopOutlined />}>
-            nav 8
+        <div className="logo-container">
+          <img className="logo-img" alt="pesaspace_logo" src={Logo} />
+          <span>Pesa Space</span>
+        </div>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          className="mt-5 site-layout-background"
+        >
+          <Menu.Item key={"0"} className="nav-menu" icon={<DashboardFilled />}>
+            <Link to={"/"}>Dashboard</Link>
           </Menu.Item>
         </Menu>
       </Sider>
-      <Layout className="site-layout" style={{ marginLeft: 200 }}>
-        <Header className="site-layout-background" style={{ padding: 0 }}>
-          {React.createElement(
-            this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-            {
-              className: "trigger",
-              onClick: toggle,
-            }
-          )}
-        </Header>
-        <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
-          <div
-            className="site-layout-background"
-            style={{ padding: 24, textAlign: "center" }}
-          >
-            {children}
+      <Layout className="site-layout">
+        <Header style={{ padding: 0, backgroundColor: "#fff" }}>
+          <div className="d-flex flex-row justify-content-between mx-3">
+            <div className=" d-flex flex-row">
+              <span className=" ml-4 text-dark default-text-title-props">
+              <Input style={{width: "400px"}} size="smail" placeholder="Search loan items" prefix={<SearchOutlined />} />
+              </span>
+            </div>
+            <div className="text-dark user-info d-flex flex-row">
+              <img
+                alt=""
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "100px",
+                  marginTop: "10px",
+                }}
+                src={Me}
+              />
+              <span className="mx-2 text-capitalize">
+                <strong>John Doe</strong>
+              </span>
+            </div>
           </div>
+        </Header>
+        <Content
+          className="overflow-auto"
+          style={{
+            // padding: 24,
+            // minHeight: 280,
+            height: "83vh",
+          }}
+        >
+          {children}
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Victor Design © {new Date} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );

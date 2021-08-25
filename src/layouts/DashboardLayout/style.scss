@@ -1,0 +1,37 @@
+@import "../../assets/styles/colors.scss";
+
+
+
+.nav-menu {
+  margin-top: 50px;
+}
+
+.site-layout-header {
+  background: #ffffff;
+}
+.site-layout-background {
+  background-color: $light-color;
+}
+.sider * {
+  background-color: $primary-color !important;
+  color: #ffffff;
+  font-size: 17px;
+}
+.site-layout {
+  background: $light-color;
+}
+.logo-container {
+  padding: 20px;
+  .logo-img {
+    width: 50px;
+  }
+  span {
+    font-weight: 800;
+    padding-left: 10px;
+    font-size: 20px;
+  }
+}
+
+.ant-layout-sider{
+  min-width: 230px !important;
+}
