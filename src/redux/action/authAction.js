@@ -1,5 +1,5 @@
 import store from "store";
-import { LOGIN, LOADING_USER, FIND_ALL_USERS } from "redux/actionTypes";
+import { LOGIN, LOADING_USER, FIND_ALL_USERS, INVITE_USER } from "redux/actionTypes";
 import { notification } from "antd";
 import authService from "services/auth";
 import { decoder as tokenDecoder } from "utils/tokenDecoder";
@@ -53,6 +53,37 @@ export const findAllUsersAction = (payload) => async (dispatch) => {
     });
     dispatch({
       type: FIND_ALL_USERS,
+      payload: {
+        data: "Unable to login",
+        status: "fail",
+      },
+    });
+    dispatch({ type: LOADING_USER, payload: { loading: false } });
+  }
+};
+
+export const inviteUserAction = (payload) => async (dispatch) => {
+  dispatch({ type: LOADING_USER, payload: { loading: true } });
+  try {
+    const { status, body } = await authService.inviteUser(payload);
+    if (status === 201) {
+      notification.success({
+        message: "Success",
+        description: "User invited successfully",
+      });
+      dispatch({
+        type: INVITE_USER,
+        payload: { data: body.data, status: "success" },
+      });
+    }
+    dispatch({ type: LOADING_USER, payload: { loading: false } });
+  } catch (error) {
+    notification.error({
+      message: "Error",
+      description: "Incorrect email or password",
+    });
+    dispatch({
+      type: INVITE_USER,
       payload: {
         data: "Unable to login",
         status: "fail",

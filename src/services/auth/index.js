@@ -17,7 +17,16 @@ const getAllUsers = async (payload) => {
   }
 };
 
+const inviteUser = async (payload) => {
+  try {
+    return await http.post("/auth/register", payload);
+  } catch (error) {
+    console.log("API ERROR: ", error);
+  }
+};
+
 export default {
   login,
-  getAllUsers
+  getAllUsers,
+  inviteUser,
 };

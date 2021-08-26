@@ -21,19 +21,24 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
 import Button from "components/Button";
-import { findAllUsersAction } from "redux/action/authAction";
+import { findAllUsersAction, inviteUserAction } from "redux/action/authAction";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
+  
+  const {
+    core: { loading },
+    auth: { allUsers,invitedUser },
+  } = useSelector(({ core, auth: { allUsers,invitedUser } }) => ({
+    core,
+    auth: { allUsers, invitedUser },
+  }));
 
   useEffect(() => {
     findAllUsersAction()(dispatch);
-  }, []);
-
-  const {
-    core: { loading },auth: { allUsers },
-  } = useSelector(({ core, auth: { allUsers }, }) => ({ core, auth: { allUsers }, }));
+    setNewUserVisible(false);
+  }, [invitedUser]);
 
   const columns = [
     {
@@ -83,7 +88,16 @@ const Dashboard = () => {
   const [newUserForm] = Form.useForm();
   const [newUserVisible, setNewUserVisible] = useState(false);
 
-  const handleNewUser = () => {};
+  const handleNewUser = () => {
+    newUserForm
+      .validateFields()
+      .then((payload) => {
+        inviteUserAction(payload)(dispatch);
+      })
+      .catch((errorInfo) => {
+        console.log(errorInfo);
+      });
+  };
 
   return (
     <DashboardLayout>
@@ -174,7 +188,11 @@ const Dashboard = () => {
           >
             Add New User
           </Button>
-          <Table columns={columns} dataSource={allUsers?.data} loading={loading} />
+          <Table
+            columns={columns}
+            dataSource={allUsers?.data || []}
+            loading={loading}
+          />
         </div>
       </div>
     </DashboardLayout>
