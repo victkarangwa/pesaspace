@@ -69,7 +69,7 @@ const DashboardLayout = ({ children }) => {
                 src={Me}
               />
               <span className="mx-2 text-capitalize">
-                <strong>{tokenDecoder().first_name} {tokenDecoder().last_name}</strong>
+                <strong>{tokenDecoder()?.first_name || ""} {tokenDecoder()?.last_name || ""}</strong>
               </span>
             </div>
           </div>

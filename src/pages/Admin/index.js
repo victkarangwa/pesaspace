@@ -21,12 +21,19 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
 import Button from "components/Button";
+import { findAllUsersAction } from "redux/action/authAction";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    findAllUsersAction()(dispatch);
+  }, []);
+
   const {
-    core: { loading },
-  } = useSelector(({ core }) => ({ core }));
+    core: { loading },auth: { allUsers },
+  } = useSelector(({ core, auth: { allUsers }, }) => ({ core, auth: { allUsers }, }));
 
   const columns = [
     {
@@ -167,7 +174,7 @@ const Dashboard = () => {
           >
             Add New User
           </Button>
-          <Table columns={columns} dataSource={[]} loading={loading} />
+          <Table columns={columns} dataSource={allUsers?.data} loading={loading} />
         </div>
       </div>
     </DashboardLayout>

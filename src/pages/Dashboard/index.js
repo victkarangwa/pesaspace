@@ -44,11 +44,11 @@ const Dashboard = () => {
   }, []);
 
   const analyticData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: allRequests?.data?.map((item) => item.createdAt.split("T")[0]),
     datasets: [
       {
-        label: "requests",
-        data: [65, 59, 80, 81, 56, 55, 40],
+        label: "Amount",
+        data: allRequests?.data?.map((item) => item.amount_borrowed),
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(255, 159, 64, 0.2)",
@@ -203,10 +203,10 @@ const Dashboard = () => {
                       {request.first_name} {request.last_name}
                     </strong>
                     <Progress
-                      percent={
-                        ((request.amount_paid / request.total_amount_to_pay) *
-                        100).toFixed(1)
-                      }
+                      percent={(
+                        (request.amount_paid / request.total_amount_to_pay) *
+                        100
+                      ).toFixed(1)}
                     />
                   </div>
                 </div>

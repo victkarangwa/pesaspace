@@ -21,22 +21,54 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
 import Button from "components/Button";
+import {
+  findAllRequests,
+  acceptOrRejectRequest,
+} from "redux/action/loanAction";
 
 const Requests = () => {
   const dispatch = useDispatch();
+
+  const [reason, setReason] = useState("");
+
   const {
     core: { loading },
-  } = useSelector(({ core }) => ({ core }));
+    loan: { allRequests, actionedRequest },
+  } = useSelector(({ core, loan: { allRequests, actionedRequest } }) => ({
+    core,
+    loan: { allRequests, actionedRequest },
+  }));
+
+  useEffect(() => {
+    findAllRequests()(dispatch);
+  }, [actionedRequest]);
+
+
 
   const handleAcceptOrReject = (record, action) => {
     Modal.confirm({
       title: "Confirm",
       icon: <ExclamationCircleOutlined />,
-      content: `Are you sure you want to ${action} this request from ("${record.first_name}")?`,
+      content: (
+        <>
+          <p>
+            Are you sure you want to {action} this request from "
+            {record.first_name} {record.last_name}" ?
+          </p>
+          {action === "reject" && (
+            <p>
+              <Input.TextArea
+                onChange={(e) => setReason(e.target.value)}
+                placeholder="Reason for rejection"
+              />
+            </p>
+          )}
+        </>
+      ),
       okText: `Yes, ${action}`,
       cancelText: "Cancel",
       onOk: () => {
-        //
+        acceptOrRejectRequest(record.id, action, reason)(dispatch);
       },
     });
   };
@@ -54,12 +86,12 @@ const Requests = () => {
       key: "last_name",
       render: (text, { unit }) => `${text}`,
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-      render: (text) => `${text}`,
-    },
+    // {
+    //   title: "Email",
+    //   dataIndex: "email",
+    //   key: "email",
+    //   render: (text) => `${text}`,
+    // },
     {
       title: "Phone",
       dataIndex: "phone",
@@ -67,17 +99,17 @@ const Requests = () => {
       render: (text) => `${text}`,
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
+      title: "Amount(RWF)",
+      dataIndex: "amount_borrowed",
       key: "amount",
       render: (text) => `${text}`,
     },
-    {
-      title: "Paid",
-      dataIndex: "paid",
-      key: "paid",
-      render: (amount) => (amount > 0 ? amount : "N/A"),
-    },
+    // {
+    //   title: "Paid",
+    //   dataIndex: "paid",
+    //   key: "paid",
+    //   render: (amount) => (amount > 0 ? amount : "N/A"),
+    // },
     {
       title: "Status",
       key: "isActive",
@@ -122,19 +154,24 @@ const Requests = () => {
         return (
           <Space size="middle">
             {isPending ? (
-              <Button
-                onClick={() => handleAcceptOrReject(record, "accept")}
-                icon={<VerifiedOutlined />}
-              >
-                Accept
-              </Button>
+              <>
+                <Button
+                  onClick={() => handleAcceptOrReject(record, "accept")}
+                  icon={<VerifiedOutlined />}
+                >
+                  Accept
+                </Button>
+
+                <Button
+                  onClick={() => handleAcceptOrReject(record, "reject")}
+                  icon={<DeleteColumnOutlined />}
+                  danger
+                >
+                  Reject
+                </Button>
+              </>
             ) : (
-              <Button
-                onClick={() => handleAcceptOrReject(record, "reject")}
-                icon={<DeleteColumnOutlined />}
-              >
-                Accept
-              </Button>
+              "-"
             )}
           </Space>
         );
@@ -144,14 +181,16 @@ const Requests = () => {
 
   const { Option } = Select;
 
-
   return (
     <DashboardLayout>
       <h3 className="p-3">Loan Requests</h3>
       <div className="d-flex flex-column">
         <div className="m-3">
-
-          <Table columns={columns} dataSource={[]} loading={loading} />
+          <Table
+            columns={columns}
+            dataSource={allRequests?.data}
+            loading={loading}
+          />
         </div>
       </div>
     </DashboardLayout>

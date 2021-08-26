@@ -1,5 +1,10 @@
 import store from "store";
-import { TRACK_LOAN_APPLICATION, FIND_ALL_REQUESTS, LOADING_USER } from "redux/actionTypes";
+import {
+  TRACK_LOAN_APPLICATION,
+  FIND_ALL_REQUESTS,
+  LOADING_USER,
+  ACCEPT_REJECT_REQUEST,
+} from "redux/actionTypes";
 import loanService from "services/loan";
 
 export const trackLoanApplication = (loan_id) => async (dispatch) => {
@@ -25,10 +30,10 @@ export const trackLoanApplication = (loan_id) => async (dispatch) => {
   }
 };
 
-export const findAllRequests = (loan_id) => async (dispatch) => {
+export const findAllRequests = () => async (dispatch) => {
   dispatch({ type: LOADING_USER, payload: { loading: true } });
   try {
-    const { status, body } = await loanService.findAllRequests(loan_id);
+    const { status, body } = await loanService.findAllRequests();
     if (status === 200) {
       dispatch({
         type: FIND_ALL_REQUESTS,
@@ -48,3 +53,28 @@ export const findAllRequests = (loan_id) => async (dispatch) => {
   }
 };
 
+export const acceptOrRejectRequest = (loan_id, action, reason) => async (dispatch) => {
+  dispatch({ type: LOADING_USER, payload: { loading: true } });
+  try {
+    const { status, body } = await loanService.acceptOrRejectRequest(
+      loan_id,
+      action, reason
+    );
+    if (status === 200) {
+      dispatch({
+        type: ACCEPT_REJECT_REQUEST,
+        payload: { data: body.data, status: "success" },
+      });
+    }
+    dispatch({ type: LOADING_USER, payload: { loading: false } });
+  } catch (error) {
+    dispatch({
+      type: ACCEPT_REJECT_REQUEST,
+      payload: {
+        data: "Request failed",
+        status: "fail",
+      },
+    });
+    dispatch({ type: LOADING_USER, payload: { loading: false } });
+  }
+};
