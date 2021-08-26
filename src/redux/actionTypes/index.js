@@ -9,3 +9,4 @@ export const ACCEPT_REJECT_REQUEST = 'ACCEPT_REJECT_REQUEST';
 export const INVITE_USER = 'INVITE_USER';
 export const FIND_NIDA_INFO = 'FIND_NIDA_INFO';
 export const APPLY_LOAN = 'APPLY_LOAN';
+export const DEPOSIT_MONEY = 'DEPOSIT_MONEY';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Progress, Button as Btn } from "antd";
+import { Progress, Modal, Input } from "antd";
 import {
   MoneyCollectFilled,
   VerifiedOutlined,
@@ -10,7 +10,11 @@ import DashboardLayout from "layouts/DashboardLayout";
 import { Bar } from "react-chartjs-2";
 import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { findWalletData, findTotalWallet } from "redux/action/walletAction";
+import {
+  findWalletData,
+  findTotalWallet,
+  depositMoney,
+} from "redux/action/walletAction";
 import { findAllUsersAction } from "redux/action/authAction";
 import { findAllRequests } from "redux/action/loanAction";
 
@@ -41,7 +45,8 @@ const Dashboard = () => {
     findTotalWallet()(dispatch);
     findAllUsersAction()(dispatch);
     findAllRequests()(dispatch);
-  }, []);
+    setIsModalVisible(false);
+  }, [wallet.deposit]);
 
   const analyticData = {
     labels: allRequests?.data?.map((item) => item.createdAt.split("T")[0]),
@@ -71,7 +76,15 @@ const Dashboard = () => {
       },
     ],
   };
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleDeposit = () => {
+    depositMoney({ amount: Number(amount) })(dispatch);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
+  const [amount, setAmount] = useState(0);
   return (
     <DashboardLayout>
       <div className="d-flex flex-column">
@@ -79,7 +92,19 @@ const Dashboard = () => {
           <h4>Dashboard Overview</h4>
           <p className="text-gray">Hi there, Welcome back!</p>
         </div>
-
+        <Modal
+          title="Deposit money"
+          visible={isModalVisible}
+          onOk={handleDeposit}
+          onCancel={handleCancel}
+          okText={"Deposit"}
+        >
+          <Input
+            onChange={(e) => setAmount(e.target.value)}
+            type="number"
+            placeholder="Enter amount"
+          />
+        </Modal>
         <div className="d-flex flex-column mx-4 mt-4">
           <div className="d-flex flex-row justify-content-around">
             <div className="overview-container">
@@ -166,7 +191,10 @@ const Dashboard = () => {
                   Your active balance
                 </p>
                 <p className="text-center">
-                  <PlusCircleOutlined style={{ fontSize: "19px" }} />
+                  <PlusCircleOutlined
+                    onClick={() => setIsModalVisible(true)}
+                    style={{ fontSize: "19px" }}
+                  />
                 </p>
               </div>
             </div>

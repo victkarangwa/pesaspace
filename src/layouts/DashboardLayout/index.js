@@ -9,7 +9,7 @@ import "./style.scss";
 import { Link } from "react-router-dom";
 import MainHeader from "components/MainHeader";
 import Logo from "assets/images/logo.png";
-import Me from "assets/images/avatar.png";
+import Me from "assets/images/me.jpeg";
 import store from "store";
 import { decoder as tokenDecoder } from "utils/tokenDecoder";
 

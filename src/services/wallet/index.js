@@ -17,7 +17,16 @@ const totalRevenue = async (payload) => {
   }
 };
 
+const deposit = async (payload) => {
+  try {
+    return await http.post("/wallet/deposit", payload);
+  } catch (error) {
+    console.log("API ERROR: ", error);
+  }
+};
+
 export default {
   myWallet,
   totalRevenue,
+  deposit
 };
