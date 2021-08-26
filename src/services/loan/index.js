@@ -17,9 +17,25 @@ const findAllRequests = async (loan_id) => {
   }
 };
 
-const acceptOrRejectRequest = async (loan_id, action,reason) => {
+const acceptOrRejectRequest = async (loan_id, action, reason) => {
   try {
-    return await http.patch(`/loan/${loan_id}/${action}`, {reason});
+    return await http.patch(`/loan/${loan_id}/${action}`, { reason });
+  } catch (error) {
+    console.log("API ERROR: ", error);
+  }
+};
+
+const findNidaInfo = async (nid) => {
+  try {
+    return await http.get(`/loan/nida/${nid}`);
+  } catch (error) {
+    console.log("API ERROR: ", error);
+  }
+};
+
+const applyForLoan = async (payload) => {
+  try {
+    return await http.post(`/loan/apply`, payload);
   } catch (error) {
     console.log("API ERROR: ", error);
   }
@@ -29,4 +45,6 @@ export default {
   trackApplication,
   findAllRequests,
   acceptOrRejectRequest,
+  findNidaInfo,
+  applyForLoan,
 };

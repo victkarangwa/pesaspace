@@ -5,7 +5,7 @@ import Button from "components/Button";
 import Logo from "assets/images/logo_dark.png";
 import { useHistory } from "react-router-dom";
 
-const MainHeader = () => {
+const MainHeader = ({setNewApplicationVisible}) => {
   const history = useHistory();
   return (
     <div className="nav-sections">
@@ -18,7 +18,7 @@ const MainHeader = () => {
       <div className="d-flex flex-row justify-content-around">
         <span className="nav-link__item">
           <Button
-            onClick={() => history.push("/loan/apply")}
+            onClick={() => setNewApplicationVisible(true)}
             icon={<TwitterOutlined />}
             link
           >
