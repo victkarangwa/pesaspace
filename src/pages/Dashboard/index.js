@@ -128,6 +128,8 @@ const Dashboard = () => {
                         RWF{" "}
                         {wallet?.revenue?.data?.totalRevenue
                           ? wallet?.revenue?.data?.totalRevenue
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                           : 0}
                       </strong>
                     </label>
@@ -185,6 +187,8 @@ const Dashboard = () => {
                   RWF{" "}
                   {wallet?.myWallet?.data?.balance
                     ? wallet?.myWallet?.data?.balance
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     : 0}
                 </h3>
                 <p className="text-center text-semi-light px-2">

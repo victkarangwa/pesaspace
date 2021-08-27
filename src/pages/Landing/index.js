@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import {UserOutlined} from "@ant-design/icons"
 import { Input, Select, Modal, Form } from "antd";
 import InvestingIllus from "assets/images/Investing-pana.png";
 import MainHeader from "components/MainHeader";
@@ -294,7 +295,7 @@ const LandingPage = () => {
         </div>
 
         <div className="text-center pt-5">
-          <Link to="/login">User Portal</Link>
+          <Link style={{fontSize: "17px"}} to="/login"><UserOutlined/>User Portal</Link>
         </div>
       </div>
     </div>
